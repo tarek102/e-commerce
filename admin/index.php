@@ -1,8 +1,11 @@
 <?php
 include("init.php"); 
 include($tpl . "header.php"); 
+include('includes/languages/english.php');
+
+echo lang('MESSAGE') . ' ' . lang('Admin');
 ?>
 
-Welcome to Index/Admin
+
 
 <?php include($tpl . "footer.php"); ?>
