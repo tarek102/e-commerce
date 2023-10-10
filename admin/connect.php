@@ -10,7 +10,6 @@
     try {
         $con = new PDO($dsn, $user, $pass, $option);
         $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        echo "You are connected to Database";
     } 
     
     catch (PDOException $e) {

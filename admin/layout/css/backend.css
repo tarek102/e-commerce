@@ -1,0 +1,29 @@
+/* Start main rules */
+
+body {
+    background-color: #f4f4f4;
+}
+
+/* End main rules */
+
+
+/* Start Login Form */
+
+.login {
+    width: 400px !important;
+    margin:150px auto;
+}
+
+.login input {
+    margin-bottom: 10px;
+}
+
+.login .form-control {
+    background-color: #e5e5e5;
+}
+
+.login .btn {
+    background-color: #008dde;
+}
+
+/* End Login Form */
