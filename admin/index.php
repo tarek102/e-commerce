@@ -1,11 +1,10 @@
 <?php
 session_start();
+$noNavbar = '';
 if (isset($_SESSION['Username'])) {
     header('location: dashboard.php');
 }
 include("init.php"); 
-include($tpl . "header.php"); 
-include('includes/languages/english.php');
 
 // Check if user coming from post request
 

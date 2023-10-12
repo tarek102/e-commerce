@@ -3,8 +3,15 @@
 function lang($phrase) {
 
     static $lang = [
-        'MESSAGE' => 'Hello',
-        'Admin' => 'Adminstrator'
+
+        // Dashboard Page
+
+        'HOME_ADMIN' => 'Admin',
+        'CATEGORIES' => 'Sections',
+        '' => '',
+        '' => '',
+        '' => '',
+        
     ];
     return $lang[$phrase];
 }
