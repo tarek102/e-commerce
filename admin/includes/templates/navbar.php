@@ -8,6 +8,10 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link" href="#"><?php echo lang("CATEGORIES")?></a>
+          <a class="nav-link" href="#"><?php echo lang("ITEMS")?></a>
+          <a class="nav-link" href="#"><?php echo lang("MEMBERS")?></a>
+          <a class="nav-link" href="#"><?php echo lang("STATISTICS")?></a>
+          <a class="nav-link" href="#"><?php echo lang("LOGS")?></a>
         </li>
         
       </ul>
