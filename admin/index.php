@@ -17,15 +17,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Check if user exist in DB
 
-    $stmt = $con->prepare("SELECT Username, Password FROM users WHERE Username = ? AND Password = ? AND GroupID = 1");
+    $stmt = $con->prepare("SELECT 
+                                UserID, Username, Password 
+                            FROM 
+                                users 
+                            WHERE 
+                                Username = ? 
+                            AND 
+                                Password = ? 
+                            AND 
+                                GroupID = 1
+                            Limit 
+                                1");
     $stmt->execute(array($username, $hashedpass));
+    $row = $stmt->fetch();
     $count = $stmt->rowCount();
 
     // If user exist, Login
 
     if ($count > 0) {
-        $_SESSION['Username'] = $username;
-        header("location: dashboard.php");
+        $_SESSION['Username'] = $username;      //Register Username
+        $_SESSION['ID'] = $row['UserID'];       // Register User ID 
+        header("location: dashboard.php");      // Redirect to Dashboard
         exit();
     }
 }
