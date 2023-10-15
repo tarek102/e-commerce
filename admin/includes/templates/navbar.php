@@ -31,7 +31,7 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="#">Edit Profile</a></li>
                 <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Log Out</a></li>
+                <li><a class="dropdown-item" href="logout.php">Log Out</a></li>
             </ul>
             </li>
         </ul>

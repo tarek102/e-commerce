@@ -4,13 +4,15 @@ include 'connect.php';
 // Routes
 
 $tpl = 'includes/templates/';
+$lang = 'includes/languages/';
+$func = 'includes/functions/';
 $css = 'layout/css/';
 $js = 'layout/js/';
-$lang = 'includes/languages/';
+
 
 include $lang . 'english.php';
 include $tpl . 'header.php';
-
+include $func . 'functions.php';
 
 
 if (!isset($noNavbar)) {
