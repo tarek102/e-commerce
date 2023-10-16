@@ -27,7 +27,8 @@ if (isset($_SESSION['Username'])) {
         
         <h1 class="text-center">Edit Member</h1>
         <div class="container">
-        <form class="">
+        <form method="post" action="?do=Update">
+            <input type="hidden" name="userid" value="<?php echo $userid?>">
             <!-- Username Field Start -->
             <div class="form-group row mb-3">
                 <label class="col-sm-2 col-form-label">Username</label>
@@ -74,6 +75,31 @@ if (isset($_SESSION['Username'])) {
        } else {
         echo "<h2 class='text-center my-5'>False ID</h2>";
        }
+    } elseif ($do == 'Update') {
+        echo '<h1 class="text-center">Update Member</h1>';
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $id = $_POST['userid'];
+            $user = $_POST['username'];
+            $email = $_POST['email'];
+            $name = $_POST['full'];
+
+            // Update the Database
+            $stmt = $con->prepare("UPDATE
+                                        users
+                                    Set
+                                        Username = ?,
+                                        Email = ?,
+                                        FullName = ?
+                                    Where
+                                        UserID = ?");
+            
+            $stmt->execute(array($user, $email, $name, $id));
+
+            echo $stmt->rowCount() . "Updated";
+        } else {
+            echo "You cant access here";
+        }
     }
     include $tpl . 'footer.php';
 } else {
