@@ -58,3 +58,13 @@ body {
     color: #f4f4f4;
 }
 /* End Bootstrap Edits */
+
+/* Start Members page */
+
+h1 {
+    font-size: 50px;
+    margin: 50px 0;
+    font-weight: bold;
+    color: #666;
+}
+/* End Members page */
