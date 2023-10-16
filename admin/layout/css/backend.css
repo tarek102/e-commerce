@@ -1,0 +1,70 @@
+/* Start main rules */
+
+body {
+    background-color: #f4f4f4;
+    font-size: 16px;
+}
+
+/* End main rules */
+
+
+/* Start Login Form */
+
+.login {
+    width: 400px !important;
+    margin:150px auto;
+}
+
+.login input {
+    margin-bottom: 10px;
+}
+
+.login .form-control {
+    background-color: #e5e5e5;
+}
+
+.login .btn {
+    background-color: #008dde;
+}
+
+/* End Login Form */
+
+/* Start Bootstrap Edits */
+
+.navbar-brand {
+    font-size: 1em;
+}
+
+.navbar-nav  > .nav-item > .nav-link ,
+.navbar-brand {
+    padding: 15px 12px;
+}
+
+
+.dropdown-toggle:hover,
+.dropdown-menu {
+    color: #f4f4f4;
+    background-color: #3498db;
+}
+
+.dropdown-menu {
+    /* padding: 0; */
+    font-size: 1em;
+    min-width: 180px;
+}
+
+.dropdown-menu > li > a {
+    padding: 10px 15px;
+    color: #f4f4f4;
+}
+/* End Bootstrap Edits */
+
+/* Start Members page */
+
+h1 {
+    font-size: 50px;
+    margin: 50px 0;
+    font-weight: bold;
+    color: #666;
+}
+/* End Members page */
