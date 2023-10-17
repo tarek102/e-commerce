@@ -33,7 +33,7 @@ if (isset($_SESSION['Username'])) {
             <div class="form-group row mb-3">
                 <label class="col-sm-2 col-form-label">Username</label>
                 <div class="col-sm-10 col-md-8">
-                    <input type="text" name="username" value="<?php echo $row['Username']?>" class="form-control form-control-lg" autocomplete="off">
+                    <input type="text" name="username" value="<?php echo $row['Username']?>" class="form-control form-control-lg" autocomplete="off" required="required">
                 </div>
             </div>
             <!-- Username Field End -->
@@ -41,7 +41,7 @@ if (isset($_SESSION['Username'])) {
             <div class="form-group row mb-3">
                 <label class="col-sm-2 col-form-label ">Email</label>
                 <div class="col-sm-10 col-md-8">
-                    <input type="email" name="email" value="<?php echo $row['Email']?>" class="form-control  form-control-lg" >
+                    <input type="email" name="email" value="<?php echo $row['Email']?>" class="form-control  form-control-lg" required="required">
                 </div>
             </div>
             <!-- Email Field End -->
@@ -49,7 +49,8 @@ if (isset($_SESSION['Username'])) {
             <div class="form-group row mb-3">
                 <label class="col-sm-2 col-form-label">Password</label>
                 <div class="col-sm-10 col-md-8">
-                    <input type="password" name="password" class="form-control  form-control-lg" autocomplete="new-password">
+                    <input type="hidden" name="oldpassword" value="<?php echo $row['Password'];?>">
+                    <input type="password" name="newpassword" class="form-control  form-control-lg" autocomplete="new-password">
                 </div>
             </div>
             <!-- Password Field End -->
@@ -77,6 +78,7 @@ if (isset($_SESSION['Username'])) {
        }
     } elseif ($do == 'Update') {
         echo '<h1 class="text-center">Update Member</h1>';
+        echo '<div class="container">';
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $id = $_POST['userid'];
@@ -84,22 +86,56 @@ if (isset($_SESSION['Username'])) {
             $email = $_POST['email'];
             $name = $_POST['full'];
 
+            // Update Password
+            $pass = empty($_POST['newpassword']) ? $pass = $_POST['oldpassword'] : $pass = sha1($_POST['newpassword']);
+
+
+            // Form Validation
+            
+            $formErrors = array();
+
+            if (empty($user)) {
+                $formErrors[] = '<div class="alert alert-danger" role="alert">Username can\'t be <strong>empty</strong></div>';
+            }
+            if (strlen($user) > 20) {
+                $formErrors[] = '<div class="alert alert-danger">Username can\'t be more than <strong>20 characters</strong></div>';
+            }
+            if (empty($email)) {
+                $formErrors[] = '<div class="alert alert-danger">Email can\'t be <strong>empty</strong></div>';
+            }
+            if (empty($name)) {
+                $formErrors[] = '<div class="alert alert-danger">Full Name can\'t be<strong> empty</strong></div>';
+            }
+            
+            foreach ($formErrors as $error) {
+                echo $error . "<br>";
+            }
+            
+            
+
             // Update the Database
-            $stmt = $con->prepare("UPDATE
+
+            if (empty($formErrors)) {
+                $stmt = $con->prepare("UPDATE
                                         users
                                     Set
                                         Username = ?,
                                         Email = ?,
-                                        FullName = ?
+                                        FullName = ?,
+                                        Password = ?
                                     Where
                                         UserID = ?");
             
-            $stmt->execute(array($user, $email, $name, $id));
+            $stmt->execute(array($user, $email, $name, $pass, $id));
 
-            echo $stmt->rowCount() . "Updated";
+            echo '<div class="alert alert-primary">' . $stmt->rowCount() . "Updated </div>";
+            }
+            
         } else {
             echo "You cant access here";
         }
+
+        echo '</div>';
     }
     include $tpl . 'footer.php';
 } else {
