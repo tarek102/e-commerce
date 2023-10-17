@@ -40,7 +40,8 @@ if (isset($_SESSION['Username'])) {
             <div class="form-group row mb-3">
                 <label class="col-sm-2 col-form-label">Password</label>
                 <div class="col-sm-10 col-md-8">
-                    <input type="password" name="password" class="form-control form-control-lg" autocomplete="new-password" required="required" placeholder="Enter a valid email">
+                    <input type="password" name="password" class="password form-control form-control-lg" autocomplete="new-password" required="required" placeholder="Enter a valid email">
+                    <i class="show-pass fa-solid fa-eye"></i>
                 </div>
             </div>
             <!-- Password Field End -->
@@ -64,8 +65,61 @@ if (isset($_SESSION['Username'])) {
         
     <?php
     } elseif ($do == 'Insert') { # Insert page
-        
-        echo $_POST['username'] . " " . $_POST['password'] . " " . $_POST['email'] . " " . $_POST['full'] ;
+
+        echo '<h1 class="text-center">Update Member</h1>';
+        echo '<div class="container">';
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $user = $_POST['username'];
+            $pass = $_POST['password'];
+            $email = $_POST['email'];
+            $name = $_POST['full'];
+
+            $hashPass = sha1($_POST['password']);
+
+            // Update Password
+            $pass = empty($_POST['newpassword']) ? $pass = $_POST['oldpassword'] : $pass = sha1($_POST['newpassword']);
+
+
+            // Form Validation
+            
+            $formErrors = array();
+
+            if (empty($user)) {
+                $formErrors[] = 'Username can\'t be <strong>empty</strong>';
+            }
+            if (strlen($user) > 20) {
+                $formErrors[] = 'Username can\'t be more than <strong>20 characters</strong>';
+            }
+            if (empty($email)) {
+                $formErrors[] = 'Email can\'t be <strong>empty</strong>';
+            }
+            if (empty($pass)) {
+                $formErrors[] = 'Password can\'t be <strong>empty</strong>';
+            }
+            if (empty($name)) {
+                $formErrors[] = 'Full Name can\'t be<strong> empty</strong>';
+            }
+            
+            foreach ($formErrors as $error) {
+                echo '<div class="alert alert-danger">' . $error . "</div>" . "<br>";
+            }
+            
+            
+
+            # Insert User info to Database
+
+            if (empty($formErrors)) {
+                
+
+            echo '<div class="alert alert-primary">' . $stmt->rowCount() . "Inserted </div>";
+            }
+            
+        } else {
+            echo "You cant access here";
+        }
+
+        echo '</div>';
     } elseif ($do == 'Edit') { # Edit Page 
     
         $userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? 
@@ -149,20 +203,20 @@ if (isset($_SESSION['Username'])) {
             $formErrors = array();
 
             if (empty($user)) {
-                $formErrors[] = '<div class="alert alert-danger" role="alert">Username can\'t be <strong>empty</strong></div>';
+                $formErrors[] = 'Username can\'t be <strong>empty</strong>';
             }
             if (strlen($user) > 20) {
-                $formErrors[] = '<div class="alert alert-danger">Username can\'t be more than <strong>20 characters</strong></div>';
+                $formErrors[] = 'Username can\'t be more than <strong>20 characters</strong>';
             }
             if (empty($email)) {
-                $formErrors[] = '<div class="alert alert-danger">Email can\'t be <strong>empty</strong></div>';
+                $formErrors[] = 'Email can\'t be <strong>empty</strong>';
             }
             if (empty($name)) {
-                $formErrors[] = '<div class="alert alert-danger">Full Name can\'t be<strong> empty</strong></div>';
+                $formErrors[] = 'Full Name can\'t be<strong> empty</strong>';
             }
             
             foreach ($formErrors as $error) {
-                echo $error . "<br>";
+                echo '<div class="alert alert-danger">' . $error . '</div>' . "<br>";
             }
             
             
