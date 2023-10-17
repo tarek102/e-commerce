@@ -10,8 +10,62 @@ if (isset($_SESSION['Username'])) {
     include 'init.php';
     $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
 
-    if ($do == 'Manage') {
-        # Manage page
+    if ($do == 'Manage') { # Manage page
+        
+        echo "welcome to manage" . "<br>";
+        echo '<a href="members.php?do=Add">Add new member</a>';
+
+    } elseif ($do === 'Add') { # Add Memebers page
+        ?>
+        <h1 class="text-center">Add Member</h1>
+        <div class="container">
+        <form method="post" action="?do=Insert">
+            <!-- Username Field Start -->
+            <div class="form-group row mb-3">
+                <label class="col-sm-2 col-form-label">Username</label>
+                <div class="col-sm-10 col-md-8">
+                    <input type="text" name="username" class="form-control form-control-lg" autocomplete="off" required="required" placeholder="Add your username">
+                </div>
+            </div>
+            <!-- Username Field End -->
+            <!-- Email Field Start -->
+            <div class="form-group row mb-3">
+                <label class="col-sm-2 col-form-label ">Email</label>
+                <div class="col-sm-10 col-md-8">
+                    <input type="email" name="email" class="form-control  form-control-lg" required="required" placeholder="Password must be at least 8 characters">
+                </div>
+            </div>
+            <!-- Email Field End -->
+            <!-- Password Field Start -->
+            <div class="form-group row mb-3">
+                <label class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10 col-md-8">
+                    <input type="password" name="password" class="form-control form-control-lg" autocomplete="new-password" required="required" placeholder="Enter a valid email">
+                </div>
+            </div>
+            <!-- Password Field End -->
+            <!-- Full name Field Start -->
+            <div class="form-group row mb-3">
+                <label class="col-sm-2 col-form-label">Full Name</label>
+                <div class="col-sm-10 col-md-8">
+                    <input type="text" name="full" class="form-control  form-control-lg" required="required" placeholder="Enter your first and last name">
+                </div>
+            </div>
+            <!-- Full name Field End -->
+            <!-- Submit Field Start -->
+            <div class="form-group row mb-3">
+                <div class="offset-sm-2 col-sm-10 col-md-8">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Add Member">
+                </div>
+            </div>
+            <!-- Submit Field End -->
+        </form>
+        </div>
+        
+    <?php
+    } elseif ($do == 'Insert') { # Insert page
+        
+        echo $_POST['username'] . " " . $_POST['password'] . " " . $_POST['email'] . " " . $_POST['full'] ;
     } elseif ($do == 'Edit') { # Edit Page 
     
         $userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? 

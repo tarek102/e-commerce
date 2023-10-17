@@ -27,6 +27,14 @@ body {
     background-color: #008dde;
 }
 
+.asterisk {
+    font-size: 30px;
+    position: absolute;
+    top: 7px;
+    right: 31px;
+    color: rgb(180, 0, 0);
+}
+
 /* End Login Form */
 
 /* Start Bootstrap Edits */
@@ -56,6 +64,10 @@ body {
 .dropdown-menu > li > a {
     padding: 10px 15px;
     color: #f4f4f4;
+}
+
+.form-group > div.col-sm-10 {
+    position: relative;
 }
 /* End Bootstrap Edits */
 
