@@ -20,4 +20,10 @@ $(function () {
     }, function () {
         $('.password').attr('type', 'password');
     })
+
+    // Confirmation on Delete
+
+    $('.confirm').click(function(){
+        return confirm('Are you sure you want to delete this user?');
+    })
 })

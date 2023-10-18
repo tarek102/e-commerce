@@ -10,10 +10,56 @@ if (isset($_SESSION['Username'])) {
     include 'init.php';
     $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
 
-    if ($do == 'Manage') { # Manage page
+    if ($do == 'Manage') { # Manage page 
+
+        // Select normal users from Database
+
+        $stmt = $con->prepare("SELECT * FROM users WHERE GroupID != 1");
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+    ?>
+
+        <h1 class="text-center">Manage Members</h1>
+        <div class="container">
+            <div class="table-responsive">
+                <table class="main-table text-center table table-striped table-bordered">
+                    <tr>
+                        <td>#ID</td> 
+                        <td>Username</td> 
+                        <td>Full Name</td> 
+                        <td>Email</td> 
+                        <td>Registered Date</td> 
+                        <td>Control</td> 
+                    </tr>
+
+                    <?php 
+                        foreach ($rows as $row) {
+                            ?>
+                                <tr>
+                                    <td><?php echo $row['UserID']?></td>
+                                    <td><?php echo $row['Username']?></td>
+                                    <td><?php echo $row['FullName']?></td>
+                                    <td><?php echo $row['Email']?></td>
+                                    <td></td>
+                                    <td>
+                                        <a href="members.php?do=Edit&userid=<?php echo $row['UserID']?>" class="btn btn-success my-3">Edit</a>
+                                        <a href="members.php?do=Delete&userid=<?php echo $row['UserID']?>" class="btn btn-danger my-3 confirm">Delete</a>
+                                    </td>
+                                </tr>
+                            <?php
+                        }
+                    ?>
+                </table>
+            </div>
+            <a href="members.php?do=Add" class="btn btn-primary">Add new member <i class="fa fa-plus mx-1"></i></a>
+        </div>
+
+    
+
+    <?php
         
-        echo "welcome to manage" . "<br>";
-        echo '<a href="members.php?do=Add">Add new member</a>';
+
+
 
     } elseif ($do === 'Add') { # Add Memebers page
         ?>
@@ -253,6 +299,30 @@ if (isset($_SESSION['Username'])) {
         }
 
         echo '</div>';
+    } elseif ($do == 'Delete') { # Delete member
+
+        echo '<h1 class="text-center">Delete Member</h1>';
+        echo '<div class="container">';
+            $userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0;
+
+            // Select user to delete from Database
+
+            $stmt = $con->prepare("SELECT * FROM users WHERE UserID = ? LIMIT 1");
+            $stmt->execute(array($userid));
+            $row = $stmt->fetch();
+            $count = $stmt->rowCount();
+
+            if ($count > 0) {
+                $stmt = $con->prepare("DELETE FROM users WHERE UserID = :userid");
+                $stmt->bindParam("userid", $userid);
+                $stmt->execute();
+
+                echo '<div class="alert alert-primary">' . $row['Username'] . " Deleted </div>";
+            } else {
+                echo 'This ID doesn\'t exist';
+            }
+
+        echo "</div>";
     }
     include $tpl . 'footer.php';
 } else {
