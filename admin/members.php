@@ -78,7 +78,7 @@ if (isset($_SESSION['Username'])) {
             $hashPass = sha1($_POST['password']);
 
             // Update Password
-            $pass = empty($_POST['newpassword']) ? $pass = $_POST['oldpassword'] : $pass = sha1($_POST['newpassword']);
+            // $pass = empty($_POST['newpassword']) ? $pass = $_POST['oldpassword'] : $pass = sha1($_POST['newpassword']);
 
 
             // Form Validation
@@ -111,8 +111,17 @@ if (isset($_SESSION['Username'])) {
 
             if (empty($formErrors)) {
                 
+                $stmt = $con->prepare("INSERT INTO
+                                        users(Username, Password, Email, FullName) 
+                                        VALUES (:user, :pass, :email, :full)");
 
-            echo '<div class="alert alert-primary">' . $stmt->rowCount() . "Inserted </div>";
+                $stmt->execute(array(
+                    'user' => $user,
+                    'pass' => $hashPass,
+                    'email' => $email,
+                    'full' => $name
+                ));
+                echo '<div class="alert alert-primary">' . $stmt->rowCount() . "Inserted </div>";
             }
             
         } else {
