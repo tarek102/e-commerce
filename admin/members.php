@@ -319,7 +319,9 @@ if (isset($_SESSION['Username'])) {
 
                 echo '<div class="alert alert-primary">' . $row['Username'] . " Deleted </div>";
             } else {
-                echo 'This ID doesn\'t exist';
+                $errorMsg = 'This ID doesn\'t exist';
+
+                homeRedirect($errorMsg, 2);
             }
 
         echo "</div>";
