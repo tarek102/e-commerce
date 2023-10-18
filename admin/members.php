@@ -42,8 +42,8 @@ if (isset($_SESSION['Username'])) {
                                     <td><?php echo $row['Email']?></td>
                                     <td></td>
                                     <td>
-                                        <a href="members.php?do=Edit&userid=<?php echo $row['UserID']?>" class="btn btn-success my-3">Edit</a>
-                                        <a href="members.php?do=Delete&userid=<?php echo $row['UserID']?>" class="btn btn-danger my-3 confirm">Delete</a>
+                                        <a href="members.php?do=Edit&userid=<?php echo $row['UserID']?>" class="btn btn-success my-3"><i class="fa fa-edit"></i>Edit</a>
+                                        <a href="members.php?do=Delete&userid=<?php echo $row['UserID']?>" class="btn btn-danger my-3 confirm"><i class="fa-solid fa-delete-left"></i>Delete</a>
                                     </td>
                                 </tr>
                             <?php
