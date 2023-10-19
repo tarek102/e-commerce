@@ -156,22 +156,35 @@ if (isset($_SESSION['Username'])) {
             # Insert User info to Database
 
             if (empty($formErrors)) {
-                
-                $stmt = $con->prepare("INSERT INTO
+
+                $check = checkItem('Username', 'users', $user);
+
+                if ($check == 1 ) {
+                    echo "<div class='container'>";
+                    echo "<div class='alert alert-danger'>This Username already exists , please select another one</div>";
+                    echo "<a href='members.php?do=Add' class='btn btn-success'>Back</a>";
+                    echo "<div>";
+                } else {
+                    $stmt = $con->prepare("INSERT INTO
                                         users(Username, Password, Email, FullName) 
                                         VALUES (:user, :pass, :email, :full)");
 
-                $stmt->execute(array(
-                    'user' => $user,
-                    'pass' => $hashPass,
-                    'email' => $email,
-                    'full' => $name
-                ));
-                echo '<div class="alert alert-primary">' . $stmt->rowCount() . "Inserted </div>";
+                    $stmt->execute(array(
+                        'user' => $user,
+                        'pass' => $hashPass,
+                        'email' => $email,
+                        'full' => $name
+                    ));
+                    echo '<div class="alert alert-primary">' . $stmt->rowCount() . "Inserted </div>";
+                }
+                
+                
+                
             }
             
         } else {
-            echo "You cant access here";
+            $msg = "<div class='alert alert-danger'>You cant access here</div>";
+            homeRedirect($msg, 'back');
         }
 
         echo '</div>';
@@ -291,11 +304,13 @@ if (isset($_SESSION['Username'])) {
             
             $stmt->execute(array($user, $email, $name, $pass, $id));
 
-            echo '<div class="alert alert-primary">' . $stmt->rowCount() . "Updated </div>";
+            $msg = '<div class="alert alert-primary">' . $stmt->rowCount() . "Updated </div>";
+            homeRedirect($msg, 'back');
             }
             
         } else {
             echo "You cant access here";
+            
         }
 
         echo '</div>';
