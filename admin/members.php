@@ -40,7 +40,7 @@ if (isset($_SESSION['Username'])) {
                                     <td><?php echo $row['Username']?></td>
                                     <td><?php echo $row['FullName']?></td>
                                     <td><?php echo $row['Email']?></td>
-                                    <td></td>
+                                    <td><?php echo $row['Date']?></td>
                                     <td>
                                         <a href="members.php?do=Edit&userid=<?php echo $row['UserID']?>" class="btn btn-success my-3"><i class="fa fa-edit"></i>Edit</a>
                                         <a href="members.php?do=Delete&userid=<?php echo $row['UserID']?>" class="btn btn-danger my-3 confirm"><i class="fa-solid fa-delete-left"></i>Delete</a>
@@ -123,10 +123,6 @@ if (isset($_SESSION['Username'])) {
 
             $hashPass = sha1($_POST['password']);
 
-            // Update Password
-            // $pass = empty($_POST['newpassword']) ? $pass = $_POST['oldpassword'] : $pass = sha1($_POST['newpassword']);
-
-
             // Form Validation
             
             $formErrors = array();
@@ -166,8 +162,8 @@ if (isset($_SESSION['Username'])) {
                     echo "<div>";
                 } else {
                     $stmt = $con->prepare("INSERT INTO
-                                        users(Username, Password, Email, FullName) 
-                                        VALUES (:user, :pass, :email, :full)");
+                                        users(Username, Password, Email, FullName, Date) 
+                                        VALUES (:user, :pass, :email, :full, now())");
 
                     $stmt->execute(array(
                         'user' => $user,
@@ -175,7 +171,8 @@ if (isset($_SESSION['Username'])) {
                         'email' => $email,
                         'full' => $name
                     ));
-                    echo '<div class="alert alert-primary">' . $stmt->rowCount() . "Inserted </div>";
+                    $msg = '<div class="alert alert-primary">' . $stmt->rowCount() . "Inserted </div>";
+                    homeRedirect($msg, 'back');
                 }
                 
                 
@@ -250,7 +247,8 @@ if (isset($_SESSION['Username'])) {
         
     <?php 
        } else {
-        echo "<h2 class='text-center my-5'>False ID</h2>";
+        $msg = "<div class='alert alert-danger'>False ID</div>";
+        homeRedirect($msg);
        }
     } elseif ($do == 'Update') {
         echo '<h1 class="text-center">Update Member</h1>';
@@ -309,7 +307,9 @@ if (isset($_SESSION['Username'])) {
             }
             
         } else {
-            echo "You cant access here";
+
+            $msg = '<div class="alert alert-danger">You cant access here</div>';
+            homeRedirect($msg);
             
         }
 
@@ -332,9 +332,10 @@ if (isset($_SESSION['Username'])) {
                 $stmt->bindParam("userid", $userid);
                 $stmt->execute();
 
-                echo '<div class="alert alert-primary">' . $row['Username'] . " Deleted </div>";
+                $msg = '<div class="alert alert-primary">' . $row['Username'] . " Deleted </div>";
+                homeRedirect($msg, 'back');
             } else {
-                $errorMsg = 'This ID doesn\'t exist';
+                $errorMsg = '<div class="alert alert-danger">This ID doesn\'t exist </div>';
 
                 homeRedirect($errorMsg, 2);
             }
