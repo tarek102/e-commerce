@@ -156,10 +156,8 @@ if (isset($_SESSION['Username'])) {
                 $check = checkItem('Username', 'users', $user);
 
                 if ($check == 1 ) {
-                    echo "<div class='container'>";
-                    echo "<div class='alert alert-danger'>This Username already exists , please select another one</div>";
-                    echo "<a href='members.php?do=Add' class='btn btn-success'>Back</a>";
-                    echo "<div>";
+                    $msg = "<div class='alert alert-danger'>This Username already exists , please select another one</div>";
+                    homeRedirect($msg, 'back');
                 } else {
                     $stmt = $con->prepare("INSERT INTO
                                         users(Username, Password, Email, FullName, Date) 
@@ -322,17 +320,15 @@ if (isset($_SESSION['Username'])) {
 
             // Select user to delete from Database
 
-            $stmt = $con->prepare("SELECT * FROM users WHERE UserID = ? LIMIT 1");
-            $stmt->execute(array($userid));
-            $row = $stmt->fetch();
-            $count = $stmt->rowCount();
+            $check = checkItem('userid', 'users', $userid);
 
-            if ($count > 0) {
+            if ($check > 0) {
                 $stmt = $con->prepare("DELETE FROM users WHERE UserID = :userid");
                 $stmt->bindParam("userid", $userid);
                 $stmt->execute();
 
-                $msg = '<div class="alert alert-primary">' . $row['Username'] . " Deleted </div>";
+
+                $msg = '<div class="alert alert-primary">' . $stmt->rowCount() . " Deleted </div>";
                 homeRedirect($msg, 'back');
             } else {
                 $errorMsg = '<div class="alert alert-danger">This ID doesn\'t exist </div>';
