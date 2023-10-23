@@ -18,7 +18,7 @@ if (isset($_SESSION['Username'])) {
             <div class="col-md-3">
                 <div class="stat">
                     Total Members
-                    <span>250</span>
+                    <span><?php echo countItem('UserID', 'users'); ?></span>
                 </div>
             </div>
             <div class="col-md-3">
