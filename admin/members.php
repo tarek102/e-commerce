@@ -13,8 +13,13 @@ if (isset($_SESSION['Username'])) {
     if ($do == 'Manage') { # Manage page 
 
         // Select normal users from Database
+        $query = '';
 
-        $stmt = $con->prepare("SELECT * FROM users WHERE GroupID != 1");
+        if (isset($_GET['page']) && $_GET['page'] == 'Pending') {
+            $query = "AND RegStatus = 0";
+        }
+
+        $stmt = $con->prepare("SELECT * FROM users WHERE GroupID != 1 $query");
         $stmt->execute();
         $rows = $stmt->fetchAll();
     ?>
@@ -44,6 +49,9 @@ if (isset($_SESSION['Username'])) {
                                     <td>
                                         <a href="members.php?do=Edit&userid=<?php echo $row['UserID']?>" class="btn btn-success my-3"><i class="fa fa-edit"></i>Edit</a>
                                         <a href="members.php?do=Delete&userid=<?php echo $row['UserID']?>" class="btn btn-danger my-3 confirm"><i class="fa-solid fa-delete-left"></i>Delete</a>
+                                        <?php  if ($row['RegStatus'] == 0) {
+                                            echo '<a href="members.php?do=Activate&userid=' . $row['UserID'] . '" class="btn btn-primary my-3 confirm"><i class="fa-solid fa-check"></i>Approve</a>';
+                                        }?>
                                     </td>
                                 </tr>
                             <?php
@@ -160,8 +168,8 @@ if (isset($_SESSION['Username'])) {
                     homeRedirect($msg, 'back');
                 } else {
                     $stmt = $con->prepare("INSERT INTO
-                                        users(Username, Password, Email, FullName, Date) 
-                                        VALUES (:user, :pass, :email, :full, now())");
+                                        users(Username, Password, Email, FullName, Date, RegStatus) 
+                                        VALUES (:user, :pass, :email, :full, now(), 1)");
 
                     $stmt->execute(array(
                         'user' => $user,
@@ -337,6 +345,26 @@ if (isset($_SESSION['Username'])) {
             }
 
         echo "</div>";
+    } elseif ($do == "Activate") {
+        $userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0;
+
+            // Select user to delete from Database
+
+            $check = checkItem('userid', 'users', $userid);
+
+            if ($check > 0) {
+                $stmt = $con->prepare("UPDATE users SET RegStatus = 1 WHERE UserID = ?");
+                $stmt->execute(array($userid ));
+
+
+                $msg = '<div class="alert alert-primary">' . $stmt->rowCount() . " Approved </div>";
+                homeRedirect($msg, 'back');
+            } else {
+                $errorMsg = '<div class="alert alert-danger">This ID doesn\'t exist </div>';
+
+                homeRedirect($errorMsg, 2);
+            }
+
     }
     include $tpl . 'footer.php';
 } else {

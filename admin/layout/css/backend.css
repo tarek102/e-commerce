@@ -74,14 +74,36 @@ body {
 /* Start Dashboard */
 
 .home-stat .stat {
-    background-color: #EEE;
-    border: 1px solid #ccc;
     padding: 20px;
     font-size: 16px;
+    color: #fff;
+    border-radius: 10px;
 }
+
+.home-stat .stat a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.home-stat .st-members{
+    background-color: #c0392b;
+}
+
+.home-stat .st-items{
+    background-color: #d35400;
+}
+
+.home-stat .st-comments{
+    background-color: #27ae60;
+}
+
+.home-stat .st-pending{
+    background-color: #8e44ad;
+}
+
 .home-stat .stat span {
     display: block;
-    font-size: 50px;
+    font-size: 60px;
 }
 
 .latest {
