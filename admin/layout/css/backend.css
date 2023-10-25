@@ -109,6 +109,47 @@ body {
 .latest {
     margin-top: 30px;
 }
+
+.latest-user {
+    margin-bottom: 0;
+}
+
+.latest-user li {
+    padding: 10px;
+    font-size: 19px;
+    font-weight: 600;
+    /* overflow: hidden; */
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.latest-user li:nth-child(odd) {
+    background-color: #c9d0d4;
+}
+
+.latest-user li .btn {
+    padding: 2px 8px;
+}
+
+.latest-user li .btn i {
+    position: relative;
+    top: -1px;
+    font-size: 14px;
+}
+
+.latest-user li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.card-latest {
+    padding: 20px;
+}
+
+.title-latest {
+    margin-left: 15px;
+}
 /* End Dashboard */
 
 /* Start Members page */

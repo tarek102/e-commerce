@@ -77,3 +77,20 @@ function countItem($item, $table){
 
 
 }
+
+
+/* get latest record function v1.0
+** Function to get latest items from Database [$select, $table, $limit]
+**
+**
+*/
+
+function getLatest($select, $table, $order, $limit = 5) {
+    global $con;
+
+    $getStmt = $con->prepare("SELECT $select FROM $table ORDER BY $order DESC LIMIT  $limit");
+    $getStmt->execute();
+    $rows = $getStmt->fetchAll();
+
+    return $rows;
+}

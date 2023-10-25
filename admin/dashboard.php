@@ -7,10 +7,8 @@ if (isset($_SESSION['Username'])) {
     $pageTitle = 'Dashboard';
     include 'init.php';
     /* Dashboard Start*/
-
-    $stmt2 = $con->prepare("SELECT count(UserID) FROM users");
-    $stmt2->execute();
-    echo $stmt2->fetchColumn() ;
+    $latestUsers = getLatest('*', 'users', 'UserID', $limit = 5);
+    $usersLimit = 5;
     ?>
     <div class="container home-stat text-center">
         <h1>Dashboard</h1>
@@ -45,18 +43,32 @@ if (isset($_SESSION['Username'])) {
     <div class="container latest">
         <div class="row">
             <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-title">
-                        <i class="fa fa-users">latest registered users</i>
+                <div class="card card-latest">
+                    <div class="card-title title-latest">
+                        <i class="fa fa-users">latest registered <?php echo $usersLimit;?> users</i>
                     </div>
+                    
                     <div class="card-body">
-                            test
+                        <ul class="list-unstyled latest-user">
+                            <?php 
+                                foreach ($latestUsers as $user) {
+                                    echo "<li>";
+                                        echo $user['Username'] ;
+                                        echo "<a href='members.php?do=Edit&userid=" . $user['UserID'] . "'>";
+                                            echo "<span class='btn btn-success'>";
+                                                echo "<i class='fa fa-edit'></i> Edit";
+                                            echo "</span>";
+                                        echo "</a>";
+                                    echo "</li>";
+                                }
+                            ?>
+                        </ul>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-title">
+                <div class="card card-latest">
+                    <div class="card-title title-latest">
                         <i class="fa fa-tag">latest Items</i>
                     </div>
                     <div class="card-body">
