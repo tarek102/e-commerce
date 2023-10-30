@@ -15,7 +15,32 @@
         include $tpl . 'footer.php';
         $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
         if ($do == 'Manage') {
-                echo "Categories";
+                $stmt2 = $con->prepare("SELECT * FROM categories");
+                $stmt2->execute();
+                $cats = $stmt2->fetchAll();?>
+
+                <h1 class="text-center">Manage Categories</h1>
+                <div class="container">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <div class="card-text">
+                                <?php
+                                    foreach ($cats as $cat) {
+                                        echo $cat['Name'] . "<br>";
+                                        echo $cat['Description'] . "<br>";
+                                        echo "Ordeing is " . $cat['Ordering'] . "<br>";
+                                        echo "Visibility is " . $cat['Visibility'] . "<br>";
+                                        echo "Comments are " . $cat['Allow_Comment'] . "<br>";
+                                        echo "Ads are " . $cat['Allow_Ads'] . "<br>";
+                                    }
+                                ?>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <?php
         } elseif ($do == 'Add') {
             ?>
         <h1 class="text-center">Add Category</h1>
