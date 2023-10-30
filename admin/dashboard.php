@@ -1,5 +1,5 @@
 <?php
-
+ob_start();
 session_start();
 
 
@@ -85,3 +85,5 @@ if (isset($_SESSION['Username'])) {
     header('location: index.php');
     exit();
 }
+
+ob_end_flush();
