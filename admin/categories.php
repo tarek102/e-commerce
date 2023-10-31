@@ -20,19 +20,21 @@
                 $cats = $stmt2->fetchAll();?>
 
                 <h1 class="text-center">Manage Categories</h1>
-                <div class="container">
+                <div class="container categories">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
+                            <h2 class="card-title">Card title</h2>
                             <div class="card-text">
                                 <?php
                                     foreach ($cats as $cat) {
-                                        echo $cat['Name'] . "<br>";
-                                        echo $cat['Description'] . "<br>";
-                                        echo "Ordeing is " . $cat['Ordering'] . "<br>";
-                                        echo "Visibility is " . $cat['Visibility'] . "<br>";
-                                        echo "Comments are " . $cat['Allow_Comment'] . "<br>";
-                                        echo "Ads are " . $cat['Allow_Ads'] . "<br>";
+                                        echo "<div class='cat'>";
+                                        echo "<h3>" . $cat['Name'] . "</h3>";
+                                        echo "<p>"; if ($cat['Description'] == '') { echo 'No Description for this category.' ;} else {echo  $cat['Description'];  } ; echo "</p>";
+                                        if ($cat['Visibility'] === 1) {echo "<span class='visibility'>Hidden</span>";} 
+                                        if ($cat['Allow_Comment'] === 1) {echo "<span class='commenting'>Comment disabled</span>";} 
+                                        if ($cat['Allow_Ads'] === 1) {echo "<span class='advertising'>Ads disabled</span>";} 
+                                        echo "</div>";
+                                        echo "<hr>";
                                     }
                                 ?>
                             </div>
