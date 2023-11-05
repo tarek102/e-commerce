@@ -43,7 +43,7 @@
                                     echo "<div class='cat'>";
                                     echo "<div class='hidden-buttons'>";
                                         echo "<a href='categories.php?do=Edit&catid=" . $cat['ID'] ."' class='btn btn-sm btn-primary'><i class='fa fa-edit'></i>Edit</a>";
-                                        echo "<a href='#' class='btn btn-sm btn-danger'><i class='fa fa-close'></i>Delete</a>";
+                                        echo "<a href='categories.php?do=Delete&catid=" . $cat['ID'] . "' class='confirm btn btn-sm btn-danger'><i class='fa fa-close'></i>Delete</a>";
                                     echo "</div>";
                                     echo "<h3>" . $cat['Name'] . "</h3>";
                                     echo "<p>"; if ($cat['Description'] == '') { echo 'No Description for this category.' ;} else {echo  $cat['Description'];  } ; echo "</p>";
@@ -58,6 +58,7 @@
                     </div>
                     
                 </div>
+                <a class='btn btn-primary mt-2 mb-5' href="?do=Add"><i class="fa fa-plus mx-2"></i>Add new category</a>
             </div>
             <?php
         } elseif ($do == 'Add') {
@@ -338,7 +339,28 @@
 
             echo '</div>';
         } elseif ($do == 'Delete') {
-            # code...
+            echo "<h1 class='text-center'>Delete Category</h1>";
+            echo "<div class='container'>";
+
+            $catid = isset($_GET['catid']) && is_numeric($_GET['catid']) ? 
+                        intval($_GET['catid']) :
+                        0;
+
+            $check = checkItem('ID', 'categories', $catid);
+
+            if ($check > 0) {
+                $stmt2 = $con->prepare("DELETE FROM categories WHERE ID = :catid");
+                $stmt2->bindParam('catid', $catid);
+                $stmt2->execute();
+
+                $msg = '<div class="alert alert-primary">' . $stmt2->rowCount() . " Deleted </div>";
+                homeRedirect($msg, 'back');
+            } else {
+                $errorMsg = '<div class="alert alert-danger">This ID doesn\'t exist </div>';
+
+                homeRedirect($errorMsg, 2);
+            }
+            echo "</div>";
         }
     } else {
         header('location: index.php');
