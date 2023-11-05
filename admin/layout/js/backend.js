@@ -26,4 +26,10 @@ $(function () {
     $('.confirm').click(function(){
         return confirm('Are you sure you want to delete this user?');
     })
+
+    // Category view option
+
+    $('.cat h3').click(function () {
+        $(this).next('.full-view').fadeToggle(200);
+    })
 })

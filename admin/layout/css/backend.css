@@ -195,7 +195,12 @@ h1 {
 /* Start Categories page */
 
 .categories .cat h3 {
-    margin: 0 0 10px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.categories .cat .full-view p {
+    margin: 10px 0;
 }
 
 .categories .cat:last-of-type ~ hr {
@@ -249,8 +254,8 @@ h1 {
 }
 
 .categories hr {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .categories .cat .commenting {

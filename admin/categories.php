@@ -41,15 +41,17 @@
                             <?php
                                 foreach ($cats as $cat) {
                                     echo "<div class='cat'>";
-                                    echo "<div class='hidden-buttons'>";
-                                        echo "<a href='categories.php?do=Edit&catid=" . $cat['ID'] ."' class='btn btn-sm btn-primary'><i class='fa fa-edit'></i>Edit</a>";
-                                        echo "<a href='categories.php?do=Delete&catid=" . $cat['ID'] . "' class='confirm btn btn-sm btn-danger'><i class='fa fa-close'></i>Delete</a>";
-                                    echo "</div>";
-                                    echo "<h3>" . $cat['Name'] . "</h3>";
-                                    echo "<p>"; if ($cat['Description'] == '') { echo 'No Description for this category.' ;} else {echo  $cat['Description'];  } ; echo "</p>";
-                                    if ($cat['Visibility'] === 1) {echo "<span class='visibility'>Hidden</span>";} 
-                                    if ($cat['Allow_Comment'] === 1) {echo "<span class='commenting'>Comment disabled</span>";} 
-                                    if ($cat['Allow_Ads'] === 1) {echo "<span class='advertising'>Ads disabled</span>";} 
+                                        echo "<div class='hidden-buttons'>";
+                                            echo "<a href='categories.php?do=Edit&catid=" . $cat['ID'] ."' class='btn btn-sm btn-primary'><i class='fa fa-edit'></i>Edit</a>";
+                                            echo "<a href='categories.php?do=Delete&catid=" . $cat['ID'] . "' class='confirm btn btn-sm btn-danger'><i class='fa fa-close'></i>Delete</a>";
+                                        echo "</div>";
+                                        echo "<h3>" . $cat['Name'] . "</h3>";
+                                        echo "<div class='full-view'>";
+                                            echo "<p>"; if ($cat['Description'] == '') { echo 'No Description for this category.' ;} else {echo  $cat['Description'];  } ; echo "</p>";
+                                            if ($cat['Visibility'] === 1) {echo "<span class='visibility'>Hidden</span>";} 
+                                            if ($cat['Allow_Comment'] === 1) {echo "<span class='commenting'>Comment disabled</span>";} 
+                                            if ($cat['Allow_Ads'] === 1) {echo "<span class='advertising'>Ads disabled</span>";} 
+                                        echo "</div>";
                                     echo "</div>";
                                     echo "<hr>";
                                 }
